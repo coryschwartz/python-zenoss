@@ -81,13 +81,13 @@ class Zenoss(object):
         params = {'dsnames': dsnames, 'start': start, 'end': end, 'function': function}
         return ast.literal_eval(self.__session.get(url, params=params).content)
 
-    def get_devices(self, device_class='/zport/dmd/Devices', limit=None):
+    def get_devices(self, device_class='/zport/dmd/Devices', limit=None, **kwargs):
         '''Get a list of all devices.
 
         '''
         log.info('Getting all devices')
         return self.__router_request('DeviceRouter', 'getDevices',
-                                     data=[{'uid': device_class, 'params': {}, 'limit': limit}])
+                                     data=[{'uid': device_class, 'params': kwargs, 'limit': limit}])
 
     def find_device(self, device_name):
         '''Find a device by name.
